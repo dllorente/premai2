@@ -1,7 +1,7 @@
 repos:
   # ── pre-commit: lint y formato (rápido, antes de cada commit) ──
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.8.0
+    rev: v0.17.0
     hooks:
       - id: ruff
         args: [--fix]
