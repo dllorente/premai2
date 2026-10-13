@@ -137,7 +137,7 @@ export default function InicioPage() {
       </div>
 
       {/* Promos */}
-      <div style={{ padding: "16px 16px 8px" }}>
+      <div style={{ padding: "16px 16px 24px" }}>
         <div
           style={{
             display: "flex",

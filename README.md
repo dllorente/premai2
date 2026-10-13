@@ -83,7 +83,8 @@ premai2/
 ├── frontend/              # Next.js 16 PWA
 │   └── src/
 │       ├── app/           # App Router pages (inicio, tickets, promos, perfil, ajustes)
-│       ├── components/    # BottomNav, TicketScreen, shared UI
+│       ├── components/    # DashboardShell (App/Web toggle), TicketScreen (camera+gallery), shared UI
+│       ├── contexts/      # ViewModeContext (app/web mode, persisted in localStorage)
 │       ├── lib/           # API client, auth helpers, tickets API
 │       └── middleware.ts  # Route protection
 ├── infra/                 # Docker Compose

@@ -10,7 +10,7 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
-  if (token && PUBLIC_PATHS.includes(pathname)) {
+  if (token && (pathname === "/" || PUBLIC_PATHS.includes(pathname))) {
     return NextResponse.redirect(new URL("/inicio", request.url));
   }
 }

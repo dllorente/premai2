@@ -1,8 +1,7 @@
 import { redirect } from "next/navigation";
-import { cookies } from "next/headers";
 
-export default async function Home() {
-  const cookieStore = await cookies();
-  const token = cookieStore.get("access_token");
-  redirect(token ? "/inicio" : "/login");
+// Auth-based routing for "/" lives in middleware.ts (no cookies() here, which
+// would break prerendering under cacheComponents).
+export default function Home() {
+  redirect("/inicio");
 }

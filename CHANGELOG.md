@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased] — Sprint 2.x — Camera + View Mode + Architecture Analysis
+
+### Added
+- `frontend/src/components/DashboardShell.tsx` — DashboardShell con toggle App/Web: modo app muestra phone frame (iPhone/Android/Tablet) con notch; modo web muestra TopNav + layout desktop centrado a 1080px
+- `frontend/src/contexts/ViewModeContext.tsx` — React context para modo app/web, persistido en localStorage
+- `frontend/src/app/(dashboard)/layout.tsx` — simplificado: wrap con `ViewModeProvider` + `DashboardShell`
+- Camera modal en `TicketScreen.tsx` vía `getUserMedia` (funciona en Chrome DevTools con webcam y en móvil con cámara trasera); botón galería mantiene `<input type="file">`
+- `.gitignore` — añadido `backend/uploads/` para no versionar subidas locales
+
+### Fixed
+- `frontend/src/app/page.tsx` — ruta raíz simplificada; routing auth movido a middleware para evitar bloqueo de prerender con `cookies()`
+- `frontend/src/middleware.ts` — añadido `pathname === "/"` al check de redirect para usuarios autenticados
+- Bottom nav nunca queda tapada por contenido: `InlineBottomNav` usa flujo normal (no `position:fixed`) dentro del flex column del phone frame; `paddingBottom: 24` en inicio page
+
+### Removed
+- `pdfplumber` eliminado de dependencias de producción (era solo para análisis local de PDFs de arquitectura)
+
 ## [Unreleased] — Sprint 2 complete
 
 ### Added (Project completeness — tests & quality)

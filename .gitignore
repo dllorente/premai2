@@ -10,4 +10,5 @@ node_modules/
 dist/
 .DS_Store
 logs/
+backend/uploads/
 PROJECT_STATE.md
