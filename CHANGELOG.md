@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] — Sprint 2 complete
 
+### Added (Project completeness — tests & quality)
+- `backend/tests/test_health.py` — health endpoint tests (public access, response shape)
+- `backend/tests/test_auth.py` — 13 auth tests: register (201/400/422), login (200/401 wrong-pass/unknown/inactive), refresh (200/401 wrong-type/garbage), me (200/401)
+- `backend/tests/conftest.py` — added `db_client` fixture for auth endpoints
+
+### Fixed
+- `backend/app/api/auth.py` — login endpoint now rejects inactive users (was missing `is_active` check, caught by test)
+
 ### Added (Task 2.6 — Integration tests)
 - `backend/tests/conftest.py` — shared fixtures: `fake_user`, `fake_ticket`, `mock_db`, `auth_client` (FastAPI dependency overrides + tmp_path for uploads), `anon_client`
 - `backend/tests/test_tickets.py` — 15 tests covering: OCRResult unit tests, Claude OCR client mock, upload 401/415/202/Celery enqueue/DB persist, list tickets (own/empty), get ticket (own/404/other-user)

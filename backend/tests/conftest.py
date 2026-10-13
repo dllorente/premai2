@@ -77,6 +77,18 @@ def auth_client(fake_user: User, mock_db: AsyncMock, tmp_path):
 
 
 @pytest.fixture
+def db_client(mock_db: AsyncMock):
+    """AsyncClient with only DB mocked — for auth endpoints that need DB but no user session."""
+
+    async def _get_db():
+        yield mock_db
+
+    app.dependency_overrides[get_db] = _get_db
+    yield mock_db
+    app.dependency_overrides.clear()
+
+
+@pytest.fixture
 def anon_client():
     """AsyncClient with no auth overrides."""
     return AsyncClient(transport=ASGITransport(app=app), base_url="http://test")
