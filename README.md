@@ -13,9 +13,10 @@ AI-powered system for detecting, analyzing, and auto-participating in brand prom
 | Migrations | Alembic |
 | Auth | JWT (python-jose + passlib argon2) |
 | Task queue | Celery |
-| Frontend | Next.js 15 (PWA) |
+| Frontend web | Next.js 15 (PWA, App Router) |
+| Mobile (planned) | React Native + Expo (iOS & Android) |
 | Infra | Docker Compose |
-| CI | GitHub Actions |
+| CI/CD | GitHub Actions → GHCR |
 
 ## Prerequisites
 
@@ -53,6 +54,15 @@ poetry run uvicorn app.main:app --reload
 API available at `http://localhost:8000`  
 Interactive docs at `http://localhost:8000/docs`
 
+```bash
+# 7. Start the frontend (separate terminal)
+cd frontend
+npm install
+npm run dev
+```
+
+Frontend available at `http://localhost:3000`
+
 ## Project Structure
 
 ```
@@ -60,7 +70,7 @@ premai2/
 ├── backend/               # FastAPI application
 │   ├── app/
 │   │   ├── api/           # Route handlers
-│   │   ├── core/          # Config, security, dependencies
+│   │   ├── core/          # Config, security, deps, logging
 │   │   ├── db/            # SQLAlchemy engine & base
 │   │   ├── models/        # ORM models
 │   │   ├── schemas/       # Pydantic request/response models
@@ -68,21 +78,28 @@ premai2/
 │   │   ├── agents/        # AI agents
 │   │   └── tasks/         # Celery tasks
 │   ├── alembic/           # Database migrations
-│   └── tests/
-├── frontend/              # Next.js PWA
+│   ├── tests/
+│   └── Dockerfile
+├── frontend/              # Next.js 15 PWA
+│   └── src/
+│       ├── app/           # App Router pages
+│       ├── lib/           # API client, auth helpers
+│       └── middleware.ts  # Route protection
 ├── infra/                 # Docker Compose
-└── .github/workflows/     # CI/CD
+│   └── docker-compose.yml
+├── logs/                  # Daily rotating logs (gitignored)
+└── .github/workflows/     # CI/CD pipeline
 ```
 
 ## API Endpoints
 
-| Method | Path | Description |
-|--------|------|-------------|
-| POST | `/auth/register` | Create account |
-| POST | `/auth/login` | Get tokens |
-| POST | `/auth/refresh` | Rotate tokens |
-| GET | `/auth/me` | Current user |
-| GET | `/health` | Health check |
+| Method | Path | Auth | Description |
+|--------|------|------|-------------|
+| GET | `/health` | — | Health check |
+| POST | `/auth/register` | — | Create account |
+| POST | `/auth/login` | — | Get tokens |
+| POST | `/auth/refresh` | — | Rotate tokens |
+| GET | `/auth/me` | Bearer | Current user |
 
 ## Development
 
@@ -91,10 +108,29 @@ premai2/
 cd backend
 poetry run pre-commit run --all-files -c ../.pre-commit-config.yaml
 
-# Create a new migration
+# Create a new migration after model changes
 poetry run alembic revision --autogenerate -m "description"
 poetry run alembic upgrade head
+
+# View logs
+tail -f ../logs/premai2.log
 ```
+
+## Roadmap
+
+| Sprint | Feature |
+|--------|---------|
+| ✅ 1 | Foundations: auth, CI/CD, Docker, Next.js |
+| 2 | OCR Agent — ticket ingestion |
+| 3 | Promo Scraper Agent |
+| 4 | Legal RAG Agent |
+| 5 | Auto-participation with Playwright |
+| 6 | Reports & notifications |
+| 7 | Observability & security |
+| 8 | Production deploy |
+| 9+ | Mobile app (iOS & Android with React Native + Expo) |
+
+**Planned auth additions:** Google OAuth (Sprint 2+)
 
 ## License
 
