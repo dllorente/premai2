@@ -11,6 +11,7 @@ from alembic import context
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
+import app.models.ticket
 import app.models.user  # noqa: F401 — registers model metadata
 from app.core.config import settings
 from app.db.base import Base

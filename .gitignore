@@ -9,3 +9,5 @@ node_modules/
 .next/
 dist/
 .DS_Store
+logs/
+PROJECT_STATE.md
