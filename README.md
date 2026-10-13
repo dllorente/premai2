@@ -125,7 +125,7 @@ tail -f ../logs/premai2.log
 | Sprint | Feature |
 |--------|---------|
 | ✅ 1 | Foundations: auth, CI/CD, Docker, Next.js |
-| 🚧 2 | OCR Agent — ticket ingestion (in progress) |
+| ✅ 2 | OCR Agent — ticket ingestion, mobile-first UI, integration tests |
 | 3 | Promo Scraper Agent |
 | 4 | Legal RAG Agent |
 | 5 | Auto-participation with Playwright |

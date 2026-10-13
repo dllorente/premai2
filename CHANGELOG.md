@@ -5,7 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased] — Sprint 2 in progress
+## [Unreleased] — Sprint 2 complete
+
+### Added (Task 2.6 — Integration tests)
+- `backend/tests/conftest.py` — shared fixtures: `fake_user`, `fake_ticket`, `mock_db`, `auth_client` (FastAPI dependency overrides + tmp_path for uploads), `anon_client`
+- `backend/tests/test_tickets.py` — 15 tests covering: OCRResult unit tests, Claude OCR client mock, upload 401/415/202/Celery enqueue/DB persist, list tickets (own/empty), get ticket (own/404/other-user)
 
 ### Added (Task 2.5 — Frontend UX)
 - `frontend/src/components/BottomNav.tsx` — 5-tab bottom navigation (Inicio, Promos, Ticket FAB, Perfil, Más) with active-state highlighting via `usePathname`
@@ -18,12 +22,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `backend/fixtures/dev_user.json` — dev test user seed credentials
 - `.claude/launch.json` — Next.js dev server config for browser preview
 
+### Added (Task 2.7 — Fixes & stubs)
+- Dev credentials pre-loaded in login page (`NODE_ENV=development`); amber badge to signal test mode
+- Stub pages for `/promos`, `/perfil`, `/ajustes` — navigation no longer 404s
+- `backend/fixtures/dev_user.json` — test user seed for local dev
+
 ### Fixed
+- `(dashboard)/layout.tsx` — removed redundant `cookies()` check; middleware handles auth, eliminating Next.js prerender blocking warning
 - Login post-auth redirect changed from `/dashboard` (404) to `/inicio`
 - Middleware authenticated redirect updated to `/inicio`
 - Root `app/page.tsx` redirect updated to `/inicio`; dashboard home moved to `(dashboard)/inicio/` to avoid route collision
-
-## [Unreleased] — Sprint 2 in progress
 
 ### Added (Sprint 2 — OCR Agent)
 - `backend/app/models/ticket.py` — `Ticket` ORM model with `purchased_at` (date+time), `brands`/`products` (JSON text), `ocr_provider`, `ocr_error`
