@@ -80,10 +80,11 @@ premai2/
 │   ├── alembic/           # Database migrations
 │   ├── tests/
 │   └── Dockerfile
-├── frontend/              # Next.js 15 PWA
+├── frontend/              # Next.js 16 PWA
 │   └── src/
-│       ├── app/           # App Router pages
-│       ├── lib/           # API client, auth helpers
+│       ├── app/           # App Router pages (inicio, tickets, promos, perfil, ajustes)
+│       ├── components/    # BottomNav, TicketScreen, shared UI
+│       ├── lib/           # API client, auth helpers, tickets API
 │       └── middleware.ts  # Route protection
 ├── infra/                 # Docker Compose
 │   └── docker-compose.yml

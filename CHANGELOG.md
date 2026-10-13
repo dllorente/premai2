@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] — Sprint 2 in progress
 
+### Added (Task 2.5 — Frontend UX)
+- `frontend/src/components/BottomNav.tsx` — 5-tab bottom navigation (Inicio, Promos, Ticket FAB, Perfil, Más) with active-state highlighting via `usePathname`
+- `frontend/src/components/TicketScreen.tsx` — ticket upload screen: camera/gallery buttons, React Query polling list, per-status chips (valid/invalid/processing/pending)
+- `frontend/src/app/(dashboard)/inicio/page.tsx` — Inicio screen: indigo header, points card, 3 brand promo cards (Coca-Cola, Danone, Nestlé) with gradient backgrounds and progress bars
+- `frontend/src/app/(dashboard)/tickets/page.tsx` — tickets route wrapping `TicketScreen`
+- `frontend/src/lib/tickets.ts` — `uploadTicket()` and `getTickets()` API functions + `Ticket` TypeScript interface
+- `frontend/src/app/globals.css` — design tokens via `@layer base`: primary (#4F46E5), secondary (#7C3AED), teal (#34D399), amber (#F59E0B), bg/card/border/text variables
+- Fonts migrated to `next/font/google` (Syne 700/800 + DM Sans 400–700)
+- `backend/fixtures/dev_user.json` — dev test user seed credentials
+- `.claude/launch.json` — Next.js dev server config for browser preview
+
+### Fixed
+- Login post-auth redirect changed from `/dashboard` (404) to `/inicio`
+- Middleware authenticated redirect updated to `/inicio`
+- Root `app/page.tsx` redirect updated to `/inicio`; dashboard home moved to `(dashboard)/inicio/` to avoid route collision
+
+## [Unreleased] — Sprint 2 in progress
+
 ### Added (Sprint 2 — OCR Agent)
 - `backend/app/models/ticket.py` — `Ticket` ORM model with `purchased_at` (date+time), `brands`/`products` (JSON text), `ocr_provider`, `ocr_error`
 - `backend/alembic/versions/e6276270121a_add_tickets_table.py` — migration creates `tickets` table with indexes on `user_id`, `status`, `ticket_number`
