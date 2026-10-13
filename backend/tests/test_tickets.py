@@ -68,11 +68,18 @@ async def test_claude_client_parse_mocked():
         }
     )
 
-    fake_response = AsyncMock()
-    fake_response.content = [AsyncMock(text=mock_text)]
+    from unittest.mock import MagicMock
+
+    from anthropic.types import TextBlock
+
+    fake_block = MagicMock(spec=TextBlock)
+    fake_block.text = mock_text
+    fake_response = MagicMock()
+    fake_response.content = [fake_block]
 
     client = ClaudeOCRClient(api_key="fake")
-    with patch.object(client._client.messages, "create", return_value=fake_response):
+    mock_create = AsyncMock(return_value=fake_response)
+    with patch.object(client._client.messages, "create", mock_create):
         result = await client.extract(b"fake_image_bytes")
 
     assert result.error is None
