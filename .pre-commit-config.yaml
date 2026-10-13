@@ -1,17 +1,24 @@
 repos:
-  # ── pre-commit: lint y formato (rápido, antes de cada commit) ──
-  - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.17.0
-    hooks:
-      - id: ruff
-        args: [--fix]
-        stages: [pre-commit]
-      - id: ruff-format
-        stages: [pre-commit]
-
-  # ── pre-push: type check y tests (antes de subir al remoto) ──
   - repo: local
     hooks:
+      # ── pre-commit: lint y formato (rápido) ──
+      - id: ruff
+        name: ruff lint
+        entry: bash -c 'cd backend && poetry run ruff check --fix .'
+        language: system
+        types: [python]
+        pass_filenames: false
+        stages: [pre-commit]
+
+      - id: ruff-format
+        name: ruff format
+        entry: bash -c 'cd backend && poetry run ruff format .'
+        language: system
+        types: [python]
+        pass_filenames: false
+        stages: [pre-commit]
+
+      # ── pre-push: tipos y tests ──
       - id: mypy
         name: mypy
         entry: bash -c 'cd backend && poetry run mypy app'
