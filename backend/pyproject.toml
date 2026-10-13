@@ -27,6 +27,14 @@ package-mode = false
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
 
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+ignore = [
+    "B008",  # FastAPI uses Depends() in function signatures by design
+]
+
 [tool.mypy]
 python_version = "3.12"
 strict = false
