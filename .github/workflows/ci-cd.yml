@@ -27,7 +27,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: backend
-        run: poetry install --only dev --no-interaction
+        run: poetry install --only dev --no-root --no-interaction
 
       - name: Run ruff lint
         working-directory: backend
@@ -86,7 +86,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: backend
-        run: poetry install --no-interaction
+        run: poetry install --no-root --no-interaction
 
       - name: Run Alembic migrations
         working-directory: backend
