@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased] — Sprint 2 in progress
+
+### Added (Sprint 2 — OCR Agent)
+- `backend/app/models/ticket.py` — `Ticket` ORM model with `purchased_at` (date+time), `brands`/`products` (JSON text), `ocr_provider`, `ocr_error`
+- `backend/alembic/versions/e6276270121a_add_tickets_table.py` — migration creates `tickets` table with indexes on `user_id`, `status`, `ticket_number`
+- `backend/app/services/ocr/` — multi-provider OCR package:
+  - `base.py`: abstract `OCRClient` interface + `OCRResult` dataclass + shared system prompt
+  - `claude_client.py`: Anthropic claude-haiku-4-5 Vision implementation
+  - `gemini_client.py`: Google Gemini 1.5 Flash Vision via REST
+  - `openai_client.py`: GPT-4o Vision implementation
+  - `factory.py`: creates client from `OCR_PROVIDER` config (`claude|gemini|openai|ensemble`)
+- `backend/app/api/tickets.py` — `POST /tickets/upload` (multipart image), `GET /tickets/`, `GET /tickets/{id}`
+- `backend/app/tasks/process_ticket.py` — Celery task: reads image, calls OCR, updates ticket status
+- `backend/app/schemas/ticket.py` — `TicketOut` and `TicketUploadResponse` Pydantic schemas
+- `backend/tests/test_tickets.py` — unit tests for OCR parsing and upload endpoint
+- `.env.example`: added `OCR_PROVIDER`, `OCR_ENSEMBLE_PROVIDERS`, `ANTHROPIC_API_KEY`, `GEMINI_API_KEY`, `OPENAI_API_KEY`, `UPLOAD_DIR`
+
 ## [Unreleased] — Sprint 1 complete
 
 ### Added

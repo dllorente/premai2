@@ -15,5 +15,14 @@ class Settings(BaseSettings):
     ENVIRONMENT: str = "development"
     DEBUG: bool = True
 
+    # OCR providers
+    OCR_PROVIDER: str = "claude"  # claude | gemini | openai | ensemble
+    OCR_ENSEMBLE_PROVIDERS: list[str] = ["claude", "gemini"]
+    ANTHROPIC_API_KEY: str = ""
+    GEMINI_API_KEY: str = ""
+    OPENAI_API_KEY: str = ""
+
+    UPLOAD_DIR: str = "uploads/tickets"
+
 
 settings = Settings()

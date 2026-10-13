@@ -100,6 +100,9 @@ premai2/
 | POST | `/auth/login` | — | Get tokens |
 | POST | `/auth/refresh` | — | Rotate tokens |
 | GET | `/auth/me` | Bearer | Current user |
+| POST | `/tickets/upload` | Bearer | Upload ticket image (OCR async) |
+| GET | `/tickets/` | Bearer | List user tickets |
+| GET | `/tickets/{id}` | Bearer | Get ticket detail |
 
 ## Development
 
@@ -121,7 +124,7 @@ tail -f ../logs/premai2.log
 | Sprint | Feature |
 |--------|---------|
 | ✅ 1 | Foundations: auth, CI/CD, Docker, Next.js |
-| 2 | OCR Agent — ticket ingestion |
+| 🚧 2 | OCR Agent — ticket ingestion (in progress) |
 | 3 | Promo Scraper Agent |
 | 4 | Legal RAG Agent |
 | 5 | Auto-participation with Playwright |
