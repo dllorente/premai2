@@ -27,15 +27,15 @@ class TicketOut(BaseModel):
     @classmethod
     def parse_brands(cls, v: object) -> list:
         if isinstance(v, str):
-            return json.loads(v)
-        return v or []
+            return json.loads(v)  # type: ignore[no-any-return]
+        return list(v) if isinstance(v, list) else []
 
     @field_validator("products", mode="before")
     @classmethod
     def parse_products(cls, v: object) -> list:
         if isinstance(v, str):
-            return json.loads(v)
-        return v or []
+            return json.loads(v)  # type: ignore[no-any-return]
+        return list(v) if isinstance(v, list) else []
 
 
 class TicketUploadResponse(BaseModel):

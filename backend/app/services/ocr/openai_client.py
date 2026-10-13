@@ -30,7 +30,8 @@ class OpenAIOCRClient(OCRClient):
                     }
                 ],
             )
-            raw = response.choices[0].message.content.strip()
+            content = response.choices[0].message.content or ""
+            raw = content.strip()
             if raw.startswith("```"):
                 raw = raw.split("\n", 1)[-1].rsplit("```", 1)[0].strip()
             data = json.loads(raw)

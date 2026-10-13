@@ -3,6 +3,7 @@ import json
 import logging
 
 import anthropic
+from anthropic.types import TextBlock
 
 from app.services.ocr.base import OCR_PROMPT, OCRClient, OCRResult
 
@@ -23,7 +24,7 @@ class ClaudeOCRClient(OCRClient):
                     {
                         "role": "user",
                         "content": [
-                            {
+                            {  # type: ignore[list-item]
                                 "type": "image",
                                 "source": {
                                     "type": "base64",
@@ -36,7 +37,10 @@ class ClaudeOCRClient(OCRClient):
                     }
                 ],
             )
-            raw = response.content[0].text.strip()
+            first_block = response.content[0]
+            if not isinstance(first_block, TextBlock):
+                return OCRResult(provider="claude", error="Unexpected response block type")
+            raw = first_block.text.strip()
             data = json.loads(raw)
             result = OCRResult(provider="claude", **_coerce(data))
             logger.info(

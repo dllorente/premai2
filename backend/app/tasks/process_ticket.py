@@ -8,7 +8,7 @@ import anyio
 from celery import Celery
 
 from app.core.config import settings
-from app.db.session import async_sessionmaker as AsyncSessionLocal
+from app.db.session import AsyncSessionLocal
 from app.models.ticket import Ticket
 from app.services.ocr import get_ocr_client
 
@@ -31,6 +31,11 @@ async def _process(task: object, ticket_id: int) -> dict:
         await session.commit()
 
         try:
+            if not ticket.image_path:
+                ticket.status = "invalid"
+                ticket.ocr_error = "No image path"
+                await session.commit()
+                return {"ticket_id": ticket_id, "status": "invalid"}
             image_path = Path(settings.UPLOAD_DIR) / ticket.image_path
             image_bytes = await anyio.Path(image_path).read_bytes()
 
