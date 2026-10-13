@@ -1,0 +1,34 @@
+[project]
+name = "premai2-backend"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "David Llorente",email = "davidllorenteraposo@gmail.com"}
+]
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi[standard] (>=0.143.0,<0.144.0)",
+    "sqlalchemy[asyncio] (>=2.1.4,<3.0.0)",
+    "asyncpg (>=0.32.0,<0.33.0)",
+    "alembic (>=1.20.0,<2.0.0)",
+    "pydantic-settings (>=2.15.0,<3.0.0)",
+    "python-jose[cryptography] (>=3.5.0,<4.0.0)",
+    "passlib[argon2] (>=1.7.4,<2.0.0)",
+    "celery[redis] (>=5.6.3,<6.0.0)",
+    "redis (>=8.1.0,<9.0.0)",
+    "httpx (>=0.28.1,<0.29.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[dependency-groups]
+dev = [
+    "pytest (>=9.1.1,<10.0.0)",
+    "pytest-asyncio (>=1.4.0,<2.0.0)",
+    "ruff (>=0.17.0,<0.18.0)",
+    "mypy (>=2.4.0,<3.0.0)",
+    "pre-commit (>=4.7.0,<5.0.0)"
+]
