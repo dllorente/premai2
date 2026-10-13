@@ -61,7 +61,7 @@ async def refresh(body: RefreshRequest, db: AsyncSession = Depends(get_db)):
         payload = decode_token(body.refresh_token)
         if payload.get("type") != "refresh":
             raise HTTPException(status_code=401, detail="Invalid token type")
-        email: str = payload.get("sub")
+        email: str | None = payload.get("sub")
     except JWTError:
         raise HTTPException(status_code=401, detail="Invalid refresh token")
 
