@@ -13,6 +13,7 @@ from app.core.config import settings
 from app.db.session import AsyncSessionLocal
 from app.models.ticket import Ticket
 from app.services.ocr import get_ocr_client
+from app.services.ocr.sanitizer import sanitize_ticket_text
 
 celery_app = Celery("premai2", broker=settings.REDIS_URL, backend=settings.REDIS_URL)
 logger = logging.getLogger(__name__)
@@ -103,7 +104,7 @@ async def _process(task: object, ticket_id: int) -> dict:
                 ticket.ticket_number = result.ticket_number
                 ticket.brands = json.dumps(result.brands, ensure_ascii=False)
                 ticket.products = json.dumps(result.products, ensure_ascii=False)
-                ticket.raw_text = result.raw_text
+                ticket.raw_text = sanitize_ticket_text(result.raw_text) if result.raw_text else None
                 ticket.ocr_provider = result.provider
 
                 if result.purchased_at:

@@ -1,9 +1,16 @@
+from __future__ import annotations
+
 from datetime import date, datetime
+from typing import TYPE_CHECKING
 
 from sqlalchemy import Boolean, Date, DateTime, ForeignKey, Integer, String, Text, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.base import Base
+
+if TYPE_CHECKING:
+    from app.models.promo_source import PromoSource
+    from app.models.ticket_promotion import TicketPromotion
 
 
 class Promotion(Base):
@@ -42,5 +49,5 @@ class Promotion(Base):
         DateTime(timezone=True), server_default=func.now(), onupdate=func.now()
     )
 
-    source: Mapped["PromoSource"] = relationship(back_populates="promotions")  # noqa: F821
-    ticket_matches: Mapped[list["TicketPromotion"]] = relationship(back_populates="promotion")  # noqa: F821
+    source: Mapped[PromoSource] = relationship(back_populates="promotions")
+    ticket_matches: Mapped[list[TicketPromotion]] = relationship(back_populates="promotion")
