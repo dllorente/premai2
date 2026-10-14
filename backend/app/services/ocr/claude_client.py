@@ -6,12 +6,12 @@ import anthropic
 from anthropic.types import TextBlock
 
 from app.core.config import settings
-from app.services.ocr.base import OCRResult, build_ocr_prompt
+from app.services.ocr.base import OCRClient, OCRResult, build_ocr_prompt
 
 logger = logging.getLogger(__name__)
 
 
-class ClaudeOCRClient:
+class ClaudeOCRClient(OCRClient):
     def __init__(self, api_key: str) -> None:
         self._client = anthropic.AsyncAnthropic(
             api_key=api_key,
