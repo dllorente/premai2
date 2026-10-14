@@ -128,7 +128,8 @@ tail -f ../logs/premai2.log
 |--------|---------|
 | ✅ 1 | Foundations: auth, CI/CD, Docker, Next.js |
 | ✅ 2 | OCR Agent — ticket ingestion, mobile-first UI, integration tests |
-| 3 | Promo Scraper Agent |
+| ✅ 3 (3.1–3.6) | Promo Scraper + OCR Match + Ticket Detail + PII Sanitization + Security |
+| 3.7 | Discovery agent — web search for new promos + manual URL submission |
 | 4 | Legal RAG Agent |
 | 5 | Auto-participation with Playwright |
 | 6 | Reports & notifications |

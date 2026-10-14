@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased] — Sprint 3.6 — PII Sanitization + Security + OCR Refactor
+
+### Added (Sprint 3.6 — PII sanitization + prompt injection guardrail + OCR fallback)
+- `backend/app/services/ocr/sanitizer.py` — `sanitize_ticket_text()`: strips IBAN, NIF/NIE, card numbers, and phone numbers from raw OCR text using regex before persisting to DB
+- `backend/app/tasks/process_ticket.py` — applies `sanitize_ticket_text()` to `raw_text` before saving; PII never reaches the database
+- `backend/app/services/ocr/base.py` — added prompt injection guardrail: system prompt now instructs Claude to return `{"error":"INVALID_INPUT"}` if the ticket image contains embedded instructions
+- `backend/app/services/ocr/factory.py` — replaced parallel ensemble (pays all providers) with sequential fallback: tries providers in order, stops at first success; cheaper and equally resilient
+
 ## [Unreleased] — Sprint 3.4 + 3.5 — OCR Match + Ticket Detail Screen
 
 ### Added (Sprint 3.5 — Ticket detail screen + feedback)
