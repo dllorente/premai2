@@ -104,7 +104,8 @@ premai2/
 | GET | `/auth/me` | Bearer | Current user |
 | POST | `/tickets/upload` | Bearer | Upload ticket image (OCR async) |
 | GET | `/tickets/` | Bearer | List user tickets |
-| GET | `/tickets/{id}` | Bearer | Get ticket detail |
+| GET | `/tickets/{id}` | Bearer | Get ticket detail (includes matched promo) |
+| POST | `/tickets/{id}/feedback` | Bearer | Submit 👍/👎 OCR accuracy feedback |
 
 ## Development
 

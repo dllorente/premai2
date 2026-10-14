@@ -2,7 +2,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-    model_config = SettingsConfigDict(env_file="../.env", extra="ignore")
+    model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
     DATABASE_URL: str = "postgresql+asyncpg://premai:premai_secret@localhost:5432/premai_db"
     REDIS_URL: str = "redis://localhost:6379/0"
@@ -19,6 +19,7 @@ class Settings(BaseSettings):
     OCR_PROVIDER: str = "claude"  # claude | gemini | openai | ensemble
     OCR_ENSEMBLE_PROVIDERS: list[str] = ["claude", "gemini"]
     ANTHROPIC_API_KEY: str = ""
+    ANTHROPIC_WORKSPACE_ID: str = ""
     GEMINI_API_KEY: str = ""
     OPENAI_API_KEY: str = ""
 

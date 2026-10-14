@@ -1,0 +1,146 @@
+[
+  {
+    "url": "https://regalosymuestrasgratis.com/category/sorteos-gratis-activos",
+    "name": "Regalos y Muestras Gratis — Sorteos activos",
+    "source_type": "aggregator",
+    "brand": null,
+    "scrape_frequency_hours": 6,
+    "notes": "Agregador de sorteos y promos activos. Listar todos los enlaces de la página y scrapear cada uno."
+  },
+  {
+    "url": "https://www.muestrasgratisychollos.com/sorteos-y-concursos/",
+    "name": "Muestras Gratis y Chollos — Sorteos y concursos",
+    "source_type": "aggregator",
+    "brand": null,
+    "scrape_frequency_hours": 6,
+    "notes": "Agregador. Extraer enlaces a promos individuales."
+  },
+  {
+    "url": "https://www.muestrasgratisychollos.com/promociones-de-tu-casa-club/",
+    "name": "Muestras Gratis y Chollos — Promociones Tu Casa Club",
+    "source_type": "aggregator",
+    "brand": null,
+    "scrape_frequency_hours": 12,
+    "notes": "Sección específica de promos de hogar."
+  },
+  {
+    "url": "https://www.danone.es/promociones/",
+    "name": "Danone España — Promociones",
+    "source_type": "brand_direct",
+    "brand": "Danone",
+    "scrape_frequency_hours": 24,
+    "notes": "Página oficial de promos Danone España."
+  },
+  {
+    "url": "https://www.santandersmusic.com/",
+    "name": "Santander's Music",
+    "source_type": "brand_direct",
+    "brand": "Banco Santander",
+    "scrape_frequency_hours": 24,
+    "notes": "Promo musical Santander. Verificar si requiere ticket de compra."
+  },
+  {
+    "url": "https://www.centrallecheraasturiana.es/club/mi-cuenta/",
+    "name": "Central Lechera Asturiana — Club",
+    "source_type": "brand_direct",
+    "brand": "Central Lechera Asturiana",
+    "scrape_frequency_hours": 24,
+    "notes": "Club de promos CLA. Puede requerir login para ver promos activas."
+  },
+  {
+    "url": "https://www.nolaysnogame.com/es-es/",
+    "name": "No Lays No Game (Lay's)",
+    "source_type": "brand_direct",
+    "brand": "Lay's",
+    "scrape_frequency_hours": 24,
+    "notes": "Promo Lay's — posiblemente requiere código de producto."
+  },
+  {
+    "url": "https://www.ganaconloolos.es/",
+    "name": "Gana con Loolos",
+    "source_type": "brand_direct",
+    "brand": null,
+    "scrape_frequency_hours": 24,
+    "notes": "Identificar marca asociada al scrapear."
+  },
+  {
+    "url": "https://www.joy-pepsico.eu/es-es/",
+    "name": "Joy PepsiCo España",
+    "source_type": "brand_platform",
+    "brand": "PepsiCo",
+    "scrape_frequency_hours": 12,
+    "notes": "Plataforma de promos PepsiCo (Pepsi, 7UP, Lay's, etc.). Navegar secciones de promos activas."
+  },
+  {
+    "url": "https://www.sabeamixta.com/",
+    "name": "Sabe a Mixta",
+    "source_type": "brand_direct",
+    "brand": "Mixta",
+    "scrape_frequency_hours": 24,
+    "notes": "Promo Mixta (cerveza). Verificar si requiere ticket."
+  },
+  {
+    "url": "https://www.laligaconmassabor.es/mi-cuenta/elige-tu-premio",
+    "name": "La Liga con Más Sabor",
+    "source_type": "brand_direct",
+    "brand": null,
+    "scrape_frequency_hours": 24,
+    "notes": "Promo tipo ticket + fútbol. Identificar marca al scrapear."
+  },
+  {
+    "url": "https://ganaconmdlz.com/main/",
+    "name": "Gana con Mondelez",
+    "source_type": "brand_direct",
+    "brand": "Mondelez",
+    "scrape_frequency_hours": 24,
+    "notes": "Plataforma promos Mondelez (Oreo, Milka, Toblerone, etc.)."
+  },
+  {
+    "url": "https://www.comunidadmsm.es/",
+    "name": "Comunidad MSM (Mahou San Miguel)",
+    "source_type": "brand_platform",
+    "brand": "Mahou San Miguel",
+    "scrape_frequency_hours": 12,
+    "notes": "Plataforma central Mahou San Miguel. Engloba: San Miguel, Alhambra, Mahou, Budweiser. Scrapear listado de promos activas."
+  },
+  {
+    "url": "https://www.promocionesccep.es/",
+    "name": "Promociones CCEP (Coca-Cola EP)",
+    "source_type": "brand_platform",
+    "brand": "Coca-Cola",
+    "scrape_frequency_hours": 12,
+    "notes": "Plataforma de promos de Coca-Cola European Partners España."
+  },
+  {
+    "url": "https://www.mahou.es/pincodes/",
+    "name": "Mahou Pincodes",
+    "source_type": "brand_direct",
+    "brand": "Mahou",
+    "scrape_frequency_hours": 24,
+    "notes": "Promos Mahou por código PIN en productos."
+  },
+  {
+    "url": "https://www.heineken.com/es/es/ucl26",
+    "name": "Heineken UCL 2026",
+    "source_type": "brand_direct",
+    "brand": "Heineken",
+    "scrape_frequency_hours": 24,
+    "notes": "Promo Champions League Heineken 2026."
+  },
+  {
+    "url": "https://www.nestlefamilyclub.es/promociones",
+    "name": "Nestlé Family Club — Promociones",
+    "source_type": "brand_direct",
+    "brand": "Nestlé",
+    "scrape_frequency_hours": 24,
+    "notes": "Promos Nestlé para familias. Suelen requerir tickets de compra."
+  },
+  {
+    "url": "https://www.somosdebarra.bar/promos-list",
+    "name": "Somos de Barra — Promos",
+    "source_type": "aggregator",
+    "brand": null,
+    "scrape_frequency_hours": 12,
+    "notes": "Listado de promos de hostelería y bebidas."
+  }
+]

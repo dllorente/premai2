@@ -1,9 +1,14 @@
 from datetime import datetime
+from typing import TYPE_CHECKING
 
 from sqlalchemy import DateTime, ForeignKey, Numeric, String, Text, func
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.base import Base
+
+if TYPE_CHECKING:
+    from app.models.ticket_feedback import TicketFeedback
+    from app.models.ticket_promotion import TicketPromotion
 
 
 class Ticket(Base):
@@ -33,3 +38,6 @@ class Ticket(Base):
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), onupdate=func.now()
     )
+
+    promotions: Mapped[list["TicketPromotion"]] = relationship(back_populates="ticket")
+    feedback: Mapped["TicketFeedback | None"] = relationship(back_populates="ticket", uselist=False)

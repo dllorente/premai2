@@ -5,6 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased] — Sprint 3.4 + 3.5 — OCR Match + Ticket Detail Screen
+
+### Added (Sprint 3.5 — Ticket detail screen + feedback)
+- `backend/app/models/ticket_feedback.py` — `TicketFeedback` ORM model (`ticket_id`, `vote: up|down`, `created_at`); one feedback per ticket enforced via unique constraint
+- `backend/app/api/tickets.py` — `POST /tickets/{id}/feedback`: guarda o actualiza el voto 👍/👎; `GET /tickets/{id}` enriquecido con `matched_promo_id`, `match_confidence`, `matched_promo_title` consultando `ticket_promotions`
+- `backend/app/schemas/ticket.py` — `TicketOut` añade campos `matched_promo_id`, `match_confidence`, `matched_promo_title`
+- `frontend/src/lib/tickets.ts` — funciones `getTicket(id)` y `submitFeedback(ticketId, vote)` + campos nuevos en interface `Ticket`
+- `frontend/src/components/TicketScreen.tsx` — nuevo componente `TicketDetail`: bottom sheet al tocar un ticket, muestra datos OCR, promo matchada con badge de confianza, botones 👍/👎 con estado post-voto
+
+### Added (Sprint 3.4 — Match ticket ↔ promo en OCR)
+- `backend/app/models/ticket_promotion.py` — junction table `ticket_promotions` (ticket_id, promotion_id, confidence, matched_at)
+- `backend/app/models/ticket.py` — relación `promotions` back-reference a `TicketPromotion`
+- `backend/app/models/promotion.py` — relación `ticket_matches` back-reference a `TicketPromotion`
+- `backend/app/services/ocr/base.py` — `OCRResult` con campos `matched_promo_id` / `match_confidence`; `build_ocr_prompt(active_promos)` inyecta lista de promos activas en el prompt
+- `backend/app/services/ocr/claude_client.py` — usa `build_ocr_prompt()`, extrae `matched_promo_id` y `match_confidence` del JSON de Claude; header `anthropic-workspace-id` para claves `sk-ant-usr-*`
+- `backend/app/services/ocr/factory.py`, `openai_client.py`, `gemini_client.py` — firma `extract()` actualizada con parámetro `active_promos`
+- `backend/app/tasks/process_ticket.py` — `_fetch_active_promos()` carga promos activas; `_save_match()` persiste el match; result dict incluye `matched_promo_id`
+- `backend/app/core/config.py` — campo `ANTHROPIC_WORKSPACE_ID`; `env_file=".env"` apunta a `backend/.env`
+- Logging completo en scraper, OCR y proceso de ticket
+- `backend/alembic/versions/` — migraciones para `ticket_promotions` y `ticket_feedbacks`
+
 ## [Unreleased] — Sprint 2.x — Camera + View Mode + Architecture Analysis
 
 ### Added

@@ -5,17 +5,32 @@ import logging
 import anthropic
 from anthropic.types import TextBlock
 
-from app.services.ocr.base import OCR_PROMPT, OCRClient, OCRResult
+from app.core.config import settings
+from app.services.ocr.base import OCRResult, build_ocr_prompt
 
 logger = logging.getLogger(__name__)
 
 
-class ClaudeOCRClient(OCRClient):
+class ClaudeOCRClient:
     def __init__(self, api_key: str) -> None:
-        self._client = anthropic.AsyncAnthropic(api_key=api_key)
+        self._client = anthropic.AsyncAnthropic(
+            api_key=api_key,
+            default_headers={"anthropic-workspace-id": settings.ANTHROPIC_WORKSPACE_ID},
+        )
 
-    async def extract(self, image_bytes: bytes, mime_type: str = "image/jpeg") -> OCRResult:
+    async def extract(
+        self,
+        image_bytes: bytes,
+        mime_type: str = "image/jpeg",
+        active_promos: list[dict] | None = None,
+    ) -> OCRResult:
         b64 = base64.standard_b64encode(image_bytes).decode()
+        prompt = build_ocr_prompt(active_promos)
+        logger.info(
+            "claude_ocr.extract start mime=%s promos_count=%s",
+            mime_type,
+            len(active_promos) if active_promos else 0,
+        )
         try:
             response = await self._client.messages.create(
                 model="claude-haiku-4-5-20251001",
@@ -32,7 +47,7 @@ class ClaudeOCRClient(OCRClient):
                                     "data": b64,
                                 },
                             },
-                            {"type": "text", "text": OCR_PROMPT},
+                            {"type": "text", "text": prompt},
                         ],
                     }
                 ],
@@ -44,11 +59,15 @@ class ClaudeOCRClient(OCRClient):
             data = json.loads(raw)
             result = OCRResult(provider="claude", **_coerce(data))
             logger.info(
-                "Claude OCR success — store=%s products=%d", result.store, len(result.products)
+                "claude_ocr.extract ok store=%s products=%d matched_promo_id=%s confidence=%s",
+                result.store,
+                len(result.products),
+                result.matched_promo_id,
+                result.match_confidence,
             )
             return result
         except Exception as exc:  # noqa: BLE001
-            logger.warning("Claude OCR error: %s", exc)
+            logger.warning("claude_ocr.extract error: %s", exc)
             return OCRResult(provider="claude", error=str(exc))
 
 
@@ -62,4 +81,6 @@ def _coerce(data: dict) -> dict:
         "brands": data.get("brands") or [],
         "products": data.get("products") or [],
         "raw_text": data.get("raw_text"),
+        "matched_promo_id": data.get("matched_promo_id"),
+        "match_confidence": data.get("match_confidence"),
     }

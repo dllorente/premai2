@@ -20,8 +20,10 @@ class TicketOut(BaseModel):
     ocr_error: str | None
     created_at: datetime
     updated_at: datetime
-
     model_config = {"from_attributes": True}
+    matched_promo_id: int | None = None
+    match_confidence: str | None = None
+    matched_promo_title: str | None = None
 
     @field_validator("brands", mode="before")
     @classmethod

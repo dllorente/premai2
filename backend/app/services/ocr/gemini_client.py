@@ -17,7 +17,12 @@ class GeminiOCRClient(OCRClient):
     def __init__(self, api_key: str) -> None:
         self._api_key = api_key
 
-    async def extract(self, image_bytes: bytes, mime_type: str = "image/jpeg") -> OCRResult:
+    async def extract(
+        self,
+        image_bytes: bytes,
+        mime_type: str = "image/jpeg",
+        active_promos: list[dict] | None = None,
+    ) -> OCRResult:
         b64 = base64.standard_b64encode(image_bytes).decode()
         payload = {
             "contents": [

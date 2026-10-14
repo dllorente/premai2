@@ -5,7 +5,7 @@ description = ""
 authors = [
     {name = "David Llorente",email = "davidllorenteraposo@gmail.com"}
 ]
-requires-python = ">=3.12"
+requires-python = ">=3.12,<4.0"
 dependencies = [
     "fastapi[standard] (>=0.143.0,<0.144.0)",
     "sqlalchemy[asyncio] (>=2.1.4,<3.0.0)",
@@ -20,6 +20,11 @@ dependencies = [
     "anthropic (>=1.13.0,<2.0.0)",
     "openai (>=1.50)",
     "anyio (>=4.15.1,<5.0.0)",
+    "beautifulsoup4 (>=4.15.0,<5.0.0)",
+    "lxml (>=6.1.3,<7.0.0)",
+    "playwright (>=1.64.0,<2.0.0)",
+    "langchain-anthropic (>=1.7.6,<2.0.0)",
+    "langgraph (>=1.2.15,<2.0.0)",
 ]
 
 

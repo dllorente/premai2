@@ -37,8 +37,13 @@ class _EnsembleClient(OCRClient):
     def __init__(self, providers: list[str]) -> None:
         self._clients = [_build_single(p) for p in providers]
 
-    async def extract(self, image_bytes: bytes, mime_type: str = "image/jpeg") -> OCRResult:
-        tasks = [c.extract(image_bytes, mime_type) for c in self._clients]
+    async def extract(
+        self,
+        image_bytes: bytes,
+        mime_type: str = "image/jpeg",
+        active_promos: list[dict] | None = None,
+    ) -> OCRResult:
+        tasks = [c.extract(image_bytes, mime_type, active_promos) for c in self._clients]
         results: list[OCRResult] = await asyncio.gather(*tasks)
         for r in results:
             if not r.error:
