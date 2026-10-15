@@ -116,26 +116,28 @@ async def extract_promo(state: ScraperState) -> dict:
         default_headers={"anthropic-workspace-id": settings.ANTHROPIC_WORKSPACE_ID},
     )
     prompt = f"""Analyzes this text from a Spanish promotional website and extract active promotions.
-Brand hint (may be null): {state.get("brand")}
+        Brand hint (may be null): {state.get("brand")}
 
-Return ONLY a valid JSON object with this exact structure:
-{{
-  "is_promotion_found": true or false,
-  "title": "promotion title in Spanish",
-  "brand": "brand name or null",
-  "requirements": "what the user must buy/do to participate, in Spanish",
-  "participation_url": "direct URL to participate or null",
-  "start_date": "YYYY-MM-DD or null",
-  "end_date": "YYYY-MM-DD or null",
-  "prize_description": "what can be won, in Spanish",
-  "requires_ticket": true if a purchase receipt must be uploaded,
-  "tickets_required": number of tickets needed or null
-}}
+        Return ONLY a valid JSON object with this exact structure:
+        {{
+        "is_promotion_found": true or false,
+        "title": "promotion title in Spanish",
+        "brand": "brand name or null",
+        "promo_type": "social" if it is a raffle/giveaway with no purchase needed, "free" if it is 100% refund or free sample, "purchase" if it requires a purchase receipt — or null if unclear,
+        "requirements": "what the user must buy/do to participate, in Spanish",
+        "participation_url": "direct URL to participate or null",
+        "start_date": "YYYY-MM-DD or null",
+        "end_date": "YYYY-MM-DD or null",
+        "prize_description": "what can be won, in Spanish",
+        "legal_summary": "1-2 sentence summary of the legal bases / terms in Spanish, or null",
+        "requires_ticket": true if a purchase receipt must be uploaded,
+        "tickets_required": number of tickets needed or null
+        }}
 
-If there is no active promotion or the page requires login to see promotions, return {{"is_promotion_found": false}}.
+        If there is no active promotion or the page requires login to see promotions, return {{"is_promotion_found": false}}.
 
-PAGE TEXT:
-{clean_text}"""
+        PAGE TEXT:
+        {clean_text}"""
 
     message = await client.messages.create(
         model="claude-haiku-4-5-20251001",
@@ -178,6 +180,8 @@ async def upsert_db(state: ScraperState) -> dict:
             source_id=state["source_id"],
             title=data.get("title", "Sin título"),
             brand=data.get("brand") or state.get("brand"),
+            promo_type=data.get("promo_type"),
+            legal_summary=data.get("legal_summary"),
             requirements=data.get("requirements"),
             participation_url=data.get("participation_url") or state["url"],
             start_date=parse_date(data.get("start_date")),

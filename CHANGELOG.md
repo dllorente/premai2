@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased] — Sprint 4 — PromoType + Análisis IA + Dev UX
+
+### Added (Sprint 4 — tipo de promo, extracción legal, endpoint promos, dev script)
+- `backend/app/models/user.py` — campo `full_name: str | None` en modelo User; capturado automáticamente por Google OAuth (nombre + email)
+- `backend/alembic/versions/` — migración `add_full_name_to_users`
+- `backend/app/models/promotion.py` — enum `PromoType` (social / free / purchase) y columna `promo_type` indexada en `Promotion`
+- `backend/alembic/versions/` — migración `add_promo_type_to_promotions` con `CREATE TYPE promotype` manual (autogenerate de Alembic no emite el `CREATE TYPE` en PostgreSQL)
+- `backend/app/models/promotion.py` — columna `legal_summary: Text | None` en `Promotion`
+- `backend/alembic/versions/` — migración `add_legal_summary_to_promotions`
+- `backend/app/api/promos.py` — `GET /promos/`: lista promos activas; filtro opcional `?promo_type=social|free|purchase`; paginación (`limit` máx 200); autenticado con Bearer
+- `backend/app/main.py` — registrado `promos_router` en `/promos`
+- `backend/app/agents/promo_scraper.py` — prompt actualizado: Claude Haiku extrae `promo_type` y `legal_summary` (1–2 frases en español) del HTML; `upsert_db` persiste ambos campos
+- `frontend/src/lib/promos.ts` — tipo `PromoType`, interface `Promo` con campos nuevos, `fetchPromos(promo_type?)`
+- `frontend/src/app/(dashboard)/promos/page.tsx` — página reescrita: pills de filtro (Todas / Sorteos / Gratis / Cashback), `PromoCard` con badge de tipo en colores semánticos, llamadas reales a la API vía React Query
+- `package.json` (raíz) — `npm run dev` con `concurrently` arranca frontend + backend simultáneamente con output etiquetado; `npm run dev:all` añade ngrok
+
 ## [Unreleased] — Sprint 3.7b — Quick Wins (UX)
 
 ### Added (Quick Wins — "Cómo funciona" + FAQ accordion)

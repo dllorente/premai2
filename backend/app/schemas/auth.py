@@ -4,6 +4,7 @@ from pydantic import BaseModel, EmailStr
 class RegisterRequest(BaseModel):
     email: EmailStr
     password: str
+    full_name: str | None = None
 
 
 class LoginRequest(BaseModel):
@@ -26,5 +27,5 @@ class UserResponse(BaseModel):
     email: str
     is_active: bool
     is_superuser: bool
-
+    full_name: str | None
     model_config = {"from_attributes": True}

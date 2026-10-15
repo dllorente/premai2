@@ -33,7 +33,9 @@ async def register(body: RegisterRequest, db: AsyncSession = Depends(get_db)):
         logger.warning("Register failed — email already exists: %s", body.email)
         raise HTTPException(status_code=400, detail="Email already registered")
 
-    user = User(email=body.email, hashed_password=hash_password(body.password))
+    user = User(
+        email=body.email, hashed_password=hash_password(body.password), full_name=body.full_name
+    )
     db.add(user)
     await db.commit()
     logger.info("New user registered: %s", body.email)

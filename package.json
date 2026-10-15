@@ -1,0 +1,13 @@
+{
+  "name": "premai2",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently -n FRONT,BACK -c cyan,magenta \"npm run dev:front\" \"npm run dev:back\"",
+    "dev:front": "cd frontend && npm run dev",
+    "dev:back": "cd backend && poetry run uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload",
+    "dev:all": "concurrently -n FRONT,BACK,NGROK -c cyan,magenta,yellow \"npm run dev:front\" \"npm run dev:back\" \"ngrok http 3000\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  }
+}

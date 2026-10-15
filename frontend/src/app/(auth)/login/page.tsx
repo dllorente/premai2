@@ -23,7 +23,7 @@ export default function LoginPage() {
     try {
       const { data } = await api.post("/auth/login", { email, password });
       authStorage.setTokens(data.access_token, data.refresh_token);
-      router.push("/inicio");
+      router.push("/dashboard");
     } catch {
       setError("Email o contraseña incorrectos");
     } finally {

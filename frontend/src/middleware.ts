@@ -11,7 +11,7 @@ export function middleware(request: NextRequest) {
   }
 
   if (token && (pathname === "/" || PUBLIC_PATHS.includes(pathname))) {
-    return NextResponse.redirect(new URL("/inicio", request.url));
+    return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 }
 

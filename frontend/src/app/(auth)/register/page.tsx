@@ -11,13 +11,14 @@ export default function RegisterPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [fullName, setFullName] = useState("");
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
     setError("");
     try {
-      const { data } = await api.post("/auth/register", { email, password });
+      const { data } = await api.post("/auth/register", { email, password, full_name: fullName });
       authStorage.setTokens(data.access_token, data.refresh_token);
       router.push("/dashboard");
     } catch {
@@ -35,6 +36,14 @@ export default function RegisterPage() {
       >
         <h1 className="text-xl font-semibold">Crear cuenta</h1>
         {error && <p className="text-sm text-red-500">{error}</p>}
+        <input
+          type="text"
+          placeholder="Nombre completo"
+          value={fullName}
+          onChange={(e) => setFullName(e.target.value)}
+          required
+          className="w-full rounded-lg border border-zinc-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-zinc-900 dark:border-zinc-700 dark:bg-zinc-800"
+        />
         <input
           type="email"
           placeholder="Email"

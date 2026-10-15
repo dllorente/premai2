@@ -46,22 +46,20 @@ poetry install
 
 # 5. Run database migrations
 poetry run alembic upgrade head
+cd ..
 
-# 6. Start the API
-poetry run uvicorn app.main:app --reload
+# 6. Install root dev dependencies (concurrently)
+npm install
 ```
-
-API available at `http://localhost:8000`  
-Interactive docs at `http://localhost:8000/docs`
 
 ```bash
-# 7. Start the frontend (separate terminal)
-cd frontend
-npm install
+# 7. Start frontend + backend with a single command
 npm run dev
+# Optional: also start ngrok
+npm run dev:all
 ```
 
-Frontend available at `http://localhost:3000`
+Frontend at `http://localhost:3000` · API at `http://localhost:8000` · Docs at `http://localhost:8000/docs`
 
 ## Project Structure
 
@@ -106,6 +104,8 @@ premai2/
 | GET | `/tickets/` | Bearer | List user tickets |
 | GET | `/tickets/{id}` | Bearer | Get ticket detail (includes matched promo) |
 | POST | `/tickets/{id}/feedback` | Bearer | Submit 👍/👎 OCR accuracy feedback |
+| GET | `/promos/` | Bearer | List active promos (`?promo_type=social|free|purchase`) |
+| POST | `/promo-sources/submit` | Bearer | Submit a promo URL for AI analysis |
 
 ## Development
 
@@ -129,7 +129,8 @@ tail -f ../logs/premai2.log
 | ✅ 1 | Foundations: auth, CI/CD, Docker, Next.js |
 | ✅ 2 | OCR Agent — ticket ingestion, mobile-first UI, integration tests |
 | ✅ 3 (3.1–3.7) | Promo Scraper + OCR Match + Ticket Detail + PII Sanitization + Discovery Agent |
-| 4 | Legal RAG Agent |
+| ✅ 4 | PromoType enum + legal_summary + GET /promos endpoint + Promos page with filters + `npm run dev` |
+| 5 | Email digest + Telegram bot + notifications |
 | 5 | Auto-participation with Playwright |
 | 6 | Reports & notifications |
 | 7 | Observability & security |

@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 
 const tabs = [
   {
-    href: "/inicio",
+    href: "/dashboard",
     label: "Inicio",
     icon: (active: boolean) => (
       <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
@@ -76,12 +76,21 @@ const tabs = [
   },
   {
     href: "/ajustes",
-    label: "Más",
+    label: "Ajustes",
     icon: (active: boolean) => (
-      <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-        <circle cx="11" cy="5" r="1.5" fill={active ? "var(--primary)" : "var(--text-3)"} />
-        <circle cx="11" cy="11" r="1.5" fill={active ? "var(--primary)" : "var(--text-3)"} />
-        <circle cx="11" cy="17" r="1.5" fill={active ? "var(--primary)" : "var(--text-3)"} />
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+        <path
+          d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"
+          stroke={active ? "var(--primary)" : "var(--text-3)"}
+          strokeWidth="1.7"
+        />
+        <path
+          d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"
+          stroke={active ? "var(--primary)" : "var(--text-3)"}
+          strokeWidth="1.7"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
       </svg>
     ),
   },
@@ -108,7 +117,7 @@ export default function BottomNav() {
       }}
     >
       {tabs.map((tab) => {
-        const active = pathname === tab.href || (tab.href !== "/inicio" && pathname.startsWith(tab.href));
+        const active = pathname === tab.href || (tab.href !== "/dashboard" && pathname.startsWith(tab.href));
         return (
           <Link
             key={tab.href}
@@ -141,12 +150,19 @@ export default function BottomNav() {
                 {tab.icon(active)}
               </div>
             ) : (
-              tab.icon(active)
+                  <div style={{
+                background: active ? "rgba(79,70,229,0.12)" : "transparent",
+                borderRadius: 10,
+                padding: "5px 12px 3px",
+                transition: "background .15s",
+              }}>
+                {tab.icon(active)}
+              </div>
             )}
             <span
               style={{
                 fontSize: 10,
-                fontWeight: active ? 700 : 600,
+                fontWeight: active ? 700 : 500,
                 color: active ? "var(--primary)" : "var(--text-3)",
                 marginTop: tab.primary ? 2 : 0,
               }}

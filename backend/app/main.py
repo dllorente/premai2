@@ -1,8 +1,10 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+import app.models
 from app.api.auth import router as auth_router
 from app.api.promo_sources import router as promo_sources_router
+from app.api.promos import router as promos_router
 from app.api.tickets import router as tickets_router
 from app.core.logging import setup_logging
 
@@ -12,7 +14,7 @@ app = FastAPI(title="PremAI2 API", version="0.1.0")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=["http://localhost:3000", "http://192.168.0.34:3000"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -20,6 +22,7 @@ app.add_middleware(
 
 app.include_router(auth_router)
 app.include_router(tickets_router)
+app.include_router(promos_router)
 app.include_router(promo_sources_router)
 
 

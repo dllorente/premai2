@@ -1,12 +1,20 @@
 from __future__ import annotations
 
+import enum
 from datetime import date, datetime
 from typing import TYPE_CHECKING
 
-from sqlalchemy import Boolean, Date, DateTime, ForeignKey, Integer, String, Text, func
+from sqlalchemy import Boolean, Date, DateTime, Enum, ForeignKey, Integer, String, Text, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.base import Base
+
+
+class PromoType(str, enum.Enum):
+    social = "social"  # sorteo / RRSS — no requiere compra
+    free = "free"  # reembolso 100% / muestra gratuita
+    purchase = "purchase"  # cashback / descuento con ticket de compra
+
 
 if TYPE_CHECKING:
     from app.models.promo_source import PromoSource
@@ -22,6 +30,9 @@ class Promotion(Base):
     )
 
     title: Mapped[str] = mapped_column(String(500), nullable=False)
+    promo_type: Mapped[PromoType | None] = mapped_column(
+        Enum(PromoType, name="promotype"), nullable=True, index=True
+    )
     brand: Mapped[str | None] = mapped_column(String(100), index=True)
     description: Mapped[str | None] = mapped_column(Text)
     # What the user must buy/do: "Compra 2 productos Danone y sube el ticket"
@@ -29,7 +40,7 @@ class Promotion(Base):
     # Direct URL to participate (may differ from source URL)
     participation_url: Mapped[str] = mapped_column(String(1000), nullable=False)
     prize_description: Mapped[str | None] = mapped_column(Text)
-
+    legal_summary: Mapped[str | None] = mapped_column(Text)
     start_date: Mapped[date | None] = mapped_column(Date)
     end_date: Mapped[date | None] = mapped_column(Date)
 

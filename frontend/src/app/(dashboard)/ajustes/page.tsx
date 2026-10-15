@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { authStorage } from "@/lib/auth";
 
 const FAQ = [
   {
@@ -31,6 +33,12 @@ const FAQ = [
 
 export default function AjustesPage() {
   const [open, setOpen] = useState<number | null>(null);
+  const router = useRouter();
+
+  function handleLogout() {
+    authStorage.clear();
+    router.push("/login");
+  }
 
   return (
     <div style={{ padding: "24px 16px", maxWidth: 480, margin: "0 auto" }}>
@@ -100,9 +108,27 @@ export default function AjustesPage() {
           VERSIÓN
         </p>
         <p style={{ fontSize: 13, color: "var(--text-3)", margin: 0 }}>
-          PremAI2 · Sprint 3.7 · Octubre 2026
+          PremAI2 · Sprint 4 · Octubre 2026
         </p>
       </div>
+
+      <button
+        onClick={handleLogout}
+        style={{
+          marginTop: 16,
+          width: "100%",
+          background: "none",
+          border: "1px solid rgba(244,63,94,0.3)",
+          borderRadius: 12,
+          padding: "13px",
+          fontSize: 14,
+          fontWeight: 700,
+          color: "#F43F5E",
+          cursor: "pointer",
+        }}
+      >
+        Cerrar sesión
+      </button>
     </div>
   );
 }
