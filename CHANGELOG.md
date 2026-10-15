@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased] — Sprint 3.7 — Discovery Agent
+
+### Added (Sprint 3.7 — Tavily web discovery + manual URL submission)
+- `backend/app/services/discovery/searcher.py` — `discover_promo_urls()`: busca promos nuevas en internet con Tavily usando 5 queries predefinidas; devuelve URLs deduplicadas ordenadas por score
+- `backend/app/tasks/discover_promos.py` — Celery task `discover_new_promos`: ejecuta el discovery, hace upsert en `promo_sources` con `source_type="discovered"`, lanza `scrape_source` por cada URL nueva
+- `backend/app/api/promo_sources.py` — `POST /promo-sources/submit`: endpoint autenticado para que el usuario envíe una URL manualmente; crea `PromoSource` y lanza scraping inmediato
+- `backend/app/core/config.py` — campo `TAVILY_API_KEY`
+- `frontend/src/lib/promos.ts` — función `submitPromoUrl(url, brand?)` + interface `SubmitPromoResult`
+- `frontend/src/app/(dashboard)/promos/page.tsx` — pantalla de promos reescrita: banner "Sugerir promo" con CTA, bottom sheet modal con formulario URL + marca opcional, feedback visual de resultado
+
 ## [Unreleased] — Sprint 3.6 — PII Sanitization + Security + OCR Refactor
 
 ### Added (Sprint 3.6 — PII sanitization + prompt injection guardrail + OCR fallback)

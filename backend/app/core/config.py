@@ -23,6 +23,8 @@ class Settings(BaseSettings):
     GEMINI_API_KEY: str = ""
     OPENAI_API_KEY: str = ""
 
+    # Discovery agent
+    TAVILY_API_KEY: str = ""
     UPLOAD_DIR: str = "uploads/tickets"
 
 
