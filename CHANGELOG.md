@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased] — Sprint 3.7b — Quick Wins (UX)
+
+### Added (Quick Wins — "Cómo funciona" + FAQ accordion)
+- `frontend/src/app/(dashboard)/inicio/page.tsx` — sección "¿Cómo funciona?" con 4 pasos (📸 Sube tu ticket → 🤖 IA lo analiza → 🎯 Detectamos promos → 💰 Cobra el reembolso); iconos sobre fondo primary, layout flex con descripción
+- `frontend/src/app/(dashboard)/ajustes/page.tsx` — reemplaza stub por FAQ accordion interactivo (6 preguntas: OCR, supermercados, cobro, gratuidad, tipos de promo, sugerir URL); `useState<number|null>` para open/close; tarjeta de versión al fondo (PremAI2 · Sprint 3.7 · Octubre 2026)
+
 ## [Unreleased] — Sprint 3.7 — Discovery Agent
 
 ### Added (Sprint 3.7 — Tavily web discovery + manual URL submission)

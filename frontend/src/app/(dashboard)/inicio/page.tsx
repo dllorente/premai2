@@ -137,7 +137,7 @@ export default function InicioPage() {
       </div>
 
       {/* Promos */}
-      <div style={{ padding: "16px 16px 24px" }}>
+      <div style={{ padding: "16px 16px 0" }}>
         <div
           style={{
             display: "flex",
@@ -268,6 +268,41 @@ export default function InicioPage() {
               >
                 {p.cta}
               </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Cómo funciona */}
+      <div style={{ padding: "16px 16px 32px" }}>
+        <p style={{
+          fontSize: 15, fontWeight: 700, color: "var(--text-1)",
+          fontFamily: "Syne, sans-serif", marginBottom: 16,
+        }}>
+          ¿Cómo funciona?
+        </p>
+        {[
+          { icon: "📸", step: "1", title: "Sube tu ticket", desc: "Haz foto o sube la imagen de cualquier ticket de compra." },
+          { icon: "🤖", step: "2", title: "La IA lo analiza", desc: "Nuestro OCR extrae productos, marcas e importes automáticamente." },
+          { icon: "🎯", step: "3", title: "Detectamos promos", desc: "Cruzamos tu compra con cientos de promociones activas." },
+          { icon: "💰", step: "4", title: "Cobra el reembolso", desc: "Participa en las promos que aplican y recibe el cashback." },
+        ].map((s) => (
+          <div key={s.step} style={{ display: "flex", gap: 14, alignItems: "flex-start", marginBottom: 16 }}>
+            <div style={{
+              width: 40, height: 40, flexShrink: 0,
+              background: "var(--primary)", borderRadius: 12,
+              display: "flex", alignItems: "center", justifyContent: "center",
+              fontSize: 18,
+            }}>
+              {s.icon}
+            </div>
+            <div>
+              <p style={{ fontSize: 13, fontWeight: 700, color: "var(--text-1)", margin: "0 0 2px" }}>
+                {s.step}. {s.title}
+              </p>
+              <p style={{ fontSize: 12, color: "var(--text-3)", margin: 0, lineHeight: 1.5 }}>
+                {s.desc}
+              </p>
             </div>
           </div>
         ))}
