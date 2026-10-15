@@ -176,6 +176,9 @@ class TestGetTicket:
 
     async def test_returns_own_ticket(self, auth_client, fake_ticket):
         auth_client.get = AsyncMock(return_value=fake_ticket)
+        execute_result = MagicMock()
+        execute_result.scalar_one_or_none.return_value = None
+        auth_client.execute = AsyncMock(return_value=execute_result)
 
         async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as client:
             response = await client.get(
@@ -189,6 +192,9 @@ class TestGetTicket:
     async def test_other_users_ticket_returns_404(self, auth_client, fake_user):
         other_ticket = Ticket(id=99, user_id=fake_user.id + 1, status="valid")
         auth_client.get = AsyncMock(return_value=other_ticket)
+        execute_result = MagicMock()
+        execute_result.scalar_one_or_none.return_value = None
+        auth_client.execute = AsyncMock(return_value=execute_result)
 
         async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as client:
             response = await client.get(

@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-import app.models
+import app.models as _models  # noqa: F401 — registers ORM models before routers load
 from app.api.auth import router as auth_router
 from app.api.promo_sources import router as promo_sources_router
 from app.api.promos import router as promos_router

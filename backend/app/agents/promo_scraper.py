@@ -80,10 +80,10 @@ async def check_hash(state: ScraperState) -> dict:
 
 
 async def extract_links(state: ScraperState) -> dict:
-    soup = BeautifulSoup(state["html"], "lxml")
+    soup = BeautifulSoup(state["html"] or "", "lxml")
     links = []
     for a in soup.find_all("a", href=True):
-        href = a["href"]
+        href = str(a["href"])
         if href.startswith("http") and any(
             kw in href.lower() for kw in ["promo", "sorteo", "concurs", "gana", "premi"]
         ):
@@ -100,7 +100,7 @@ async def extract_promo(state: ScraperState) -> dict:
         logger.warning("scraper.extract_promo source_id=%s skipped=no_html", state["source_id"])
         return {"extracted": None}
 
-    soup = BeautifulSoup(state["html"], "lxml")
+    soup = BeautifulSoup(state["html"] or "", "lxml")
     for tag in soup(["script", "style", "nav", "footer", "header"]):
         tag.decompose()
     clean_text = soup.get_text(separator="\n", strip=True)[:8000]
@@ -144,7 +144,9 @@ async def extract_promo(state: ScraperState) -> dict:
         max_tokens=512,
         messages=[{"role": "user", "content": prompt}],
     )
-    raw = message.content[0].text.strip()
+    from anthropic.types import TextBlock
+
+    raw = next(b for b in message.content if isinstance(b, TextBlock)).text.strip()
     try:
         data = json.loads(raw)
     except json.JSONDecodeError:
