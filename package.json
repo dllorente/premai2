@@ -2,10 +2,11 @@
   "name": "premai2",
   "private": true,
   "scripts": {
-    "dev": "concurrently -n FRONT,BACK,URLS -c cyan,magenta,green \"npm run dev:front\" \"npm run dev:back\" \"node scripts/dev-urls.mjs\"",
+    "dev": "concurrently -n FRONT,BACK,WORKER,URLS -c cyan,magenta,blue,green \"npm run dev:front\" \"npm run dev:back\" \"npm run dev:worker\" \"node scripts/dev-urls.mjs\"",
     "dev:front": "cd frontend && npm run dev -- -H 0.0.0.0",
     "dev:back": "cd backend && poetry run uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload",
-    "dev:all": "concurrently -n FRONT,BACK,NGROK,URLS -c cyan,magenta,yellow,green \"npm run dev:front\" \"npm run dev:back\" \"ngrok http 3000 --url=${NGROK_URL:-tarot-friction-barbell.ngrok-free.dev}\" \"node scripts/dev-urls.mjs --ngrok\""
+    "dev:worker": "cd backend && poetry run celery -A app.tasks.process_ticket worker -I app.tasks.scrape_promos,app.tasks.discover_promos --pool=solo --loglevel=info",
+    "dev:all": "concurrently -n FRONT,BACK,WORKER,NGROK,URLS -c cyan,magenta,blue,yellow,green \"npm run dev:front\" \"npm run dev:back\" \"npm run dev:worker\" \"ngrok http 3000 --url=${NGROK_URL:-tarot-friction-barbell.ngrok-free.dev}\" \"node scripts/dev-urls.mjs --ngrok\""
   },
   "devDependencies": {
     "concurrently": "^9.1.0"
