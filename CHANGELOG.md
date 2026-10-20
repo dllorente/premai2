@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `frontend/src/lib/api.ts` — `baseURL` por defecto `/api`; se deja de usar `NEXT_PUBLIC_API_URL` (la IP fija en `.env.local` ya no hace falta y se ignora)
 - `backend/app/main.py` — CORS sin la IP fija `192.168.0.34`
 - `scripts/dev-urls.mjs` + `npm run dev` / `dev:all` — al arrancar imprime la URL del Mac, la del móvil con la IP actual y la de ngrok
+- `package.json` — `dev:all` arranca ngrok siempre con el mismo dominio fijo (`tarot-friction-barbell.ngrok-free.dev`, configurable con `NGROK_URL`): la app añadida a la pantalla de inicio del iPhone no hay que volver a crearla
 
 ### Added (Sprint 5.1 — preferencias de usuario)
 - `backend/app/models/user_preferences.py` — tabla `user_preferences` (1:1 con `users`, `ON DELETE CASCADE`): `promo_types` y `brands` (listas JSON; vacía = todas), `email_digest`, `digest_hour` (0–23, por defecto 8), `telegram_chat_id` (único, para Sprint 5.8)

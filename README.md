@@ -63,6 +63,8 @@ Frontend at `http://localhost:3000` · API at `http://localhost:8000` · Docs at
 
 **Testing on a phone:** on startup the `URLS` line prints the exact address to open on a phone on the same WiFi (`http://<current-LAN-IP>:3000`) and, with `dev:all`, the ngrok URL. Nothing to configure: the browser calls the API same-origin under `/api` and Next.js proxies it to FastAPI (`BACKEND_URL`, default `http://localhost:8000`), so a new IP from the router needs no `.env.local` or CORS change.
 
+`dev:all` always uses the same ngrok domain (`tarot-friction-barbell.ngrok-free.dev`, the account's free static domain), so an app added to the iPhone home screen from that URL keeps working across restarts. Override it with `NGROK_URL=<your-domain> npm run dev:all`.
+
 ## Project Structure
 
 ```
