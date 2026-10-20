@@ -4,6 +4,7 @@ from app.models.ticket import Ticket
 from app.models.ticket_feedback import TicketFeedback
 from app.models.ticket_promotion import TicketPromotion
 from app.models.user import User
+from app.models.user_preferences import UserPreferences
 
 __all__ = [
     "PromoSource",
@@ -12,4 +13,5 @@ __all__ = [
     "TicketFeedback",
     "TicketPromotion",
     "User",
+    "UserPreferences",
 ]

@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased] — Sprint 5 — Perfil, notificaciones y bots
+
+### Added (Sprint 5.1 — preferencias de usuario)
+- `backend/app/models/user_preferences.py` — tabla `user_preferences` (1:1 con `users`, `ON DELETE CASCADE`): `promo_types` y `brands` (listas JSON; vacía = todas), `email_digest`, `digest_hour` (0–23, por defecto 8), `telegram_chat_id` (único, para Sprint 5.8)
+- `backend/alembic/versions/a7c3e91f5b20_add_user_preferences_table.py` — migración (probada upgrade/downgrade en PostgreSQL 16)
+- `backend/app/api/users.py` — `GET/PATCH /users/me` (editar `full_name`) y `GET/PATCH /users/me/preferences` (actualización parcial; crea preferencias por defecto en la primera lectura)
+- `backend/app/schemas/user.py` — validación: tipos de promo del enum `PromoType`, marcas sin duplicados (case-insensitive) ni vacías, máx. 50 marcas
+- `backend/tests/test_users.py` — 8 tests de los nuevos endpoints
+
 ## [Unreleased] — Sprint 4 — PromoType + Análisis IA + Dev UX
 
 ### Added (Sprint 4 — tipo de promo, extracción legal, endpoint promos, dev script)
