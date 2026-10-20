@@ -55,11 +55,13 @@ npm install
 ```bash
 # 7. Start frontend + backend with a single command
 npm run dev
-# Optional: also start ngrok
+# Optional: also start ngrok (phone on any network, HTTPS)
 npm run dev:all
 ```
 
 Frontend at `http://localhost:3000` · API at `http://localhost:8000` · Docs at `http://localhost:8000/docs`
+
+**Testing on a phone:** on startup the `URLS` line prints the exact address to open on a phone on the same WiFi (`http://<current-LAN-IP>:3000`) and, with `dev:all`, the ngrok URL. Nothing to configure: the browser calls the API same-origin under `/api` and Next.js proxies it to FastAPI (`BACKEND_URL`, default `http://localhost:8000`), so a new IP from the router needs no `.env.local` or CORS change.
 
 ## Project Structure
 
