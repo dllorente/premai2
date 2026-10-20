@@ -15,7 +15,8 @@ import app.models.promo_source
 import app.models.promotion
 import app.models.ticket
 import app.models.ticket_promotion
-import app.models.user  # noqa: F401
+import app.models.user
+import app.models.user_preferences  # noqa: F401
 from app.core.config import settings
 from app.db.base import Base
 

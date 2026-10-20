@@ -106,6 +106,8 @@ premai2/
 | POST | `/tickets/{id}/feedback` | Bearer | Submit 👍/👎 OCR accuracy feedback |
 | GET | `/promos/` | Bearer | List active promos (`?promo_type=social|free|purchase`) |
 | POST | `/promo-sources/submit` | Bearer | Submit a promo URL for AI analysis |
+| GET / PATCH | `/users/me` | Bearer | Current user profile / update `full_name` |
+| GET / PATCH | `/users/me/preferences` | Bearer | Promo types, brands and digest settings (defaults created on first read) |
 
 ## Development
 
@@ -130,7 +132,7 @@ tail -f ../logs/premai2.log
 | ✅ 2 | OCR Agent — ticket ingestion, mobile-first UI, integration tests |
 | ✅ 3 (3.1–3.7) | Promo Scraper + OCR Match + Ticket Detail + PII Sanitization + Discovery Agent |
 | ✅ 4 | PromoType enum + legal_summary + GET /promos endpoint + Promos page with filters + `npm run dev` |
-| 5 | Email digest + Telegram bot + notifications |
+| 🚧 5 | User preferences (5.1 ✅) → profile + participations → daily email digest → Telegram bot → Google OAuth |
 | 5 | Auto-participation with Playwright |
 | 6 | Reports & notifications |
 | 7 | Observability & security |

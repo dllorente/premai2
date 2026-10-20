@@ -6,6 +6,7 @@ from app.api.auth import router as auth_router
 from app.api.promo_sources import router as promo_sources_router
 from app.api.promos import router as promos_router
 from app.api.tickets import router as tickets_router
+from app.api.users import router as users_router
 from app.core.logging import setup_logging
 
 setup_logging()
@@ -24,6 +25,7 @@ app.include_router(auth_router)
 app.include_router(tickets_router)
 app.include_router(promos_router)
 app.include_router(promo_sources_router)
+app.include_router(users_router)
 
 
 @app.get("/health")
