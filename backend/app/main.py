@@ -15,7 +15,9 @@ app = FastAPI(title="PremAI2 API", version="0.1.0")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://192.168.0.34:3000"],
+    # Browsers reach the API through the Next.js /api proxy (same origin), so
+    # only direct calls from localhost:3000 need CORS.
+    allow_origins=["http://localhost:3000"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

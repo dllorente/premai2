@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] — Sprint 5 — Perfil, notificaciones y bots
 
+### Changed (Dev UX — probar en el móvil sin configurar nada)
+- `frontend/next.config.ts` — el navegador llama a la API en `/api/*` y Next la reenvía a FastAPI (`BACKEND_URL`, por defecto `http://localhost:8000`); `allowedDevOrigins` acepta cualquier IP de red local, `*.local` y ngrok
+- `frontend/src/lib/api.ts` — `baseURL` por defecto `/api`; se deja de usar `NEXT_PUBLIC_API_URL` (la IP fija en `.env.local` ya no hace falta y se ignora)
+- `backend/app/main.py` — CORS sin la IP fija `192.168.0.34`
+- `scripts/dev-urls.mjs` + `npm run dev` / `dev:all` — al arrancar imprime la URL del Mac, la del móvil con la IP actual y la de ngrok
+
 ### Added (Sprint 5.1 — preferencias de usuario)
 - `backend/app/models/user_preferences.py` — tabla `user_preferences` (1:1 con `users`, `ON DELETE CASCADE`): `promo_types` y `brands` (listas JSON; vacía = todas), `email_digest`, `digest_hour` (0–23, por defecto 8), `telegram_chat_id` (único, para Sprint 5.8)
 - `backend/alembic/versions/a7c3e91f5b20_add_user_preferences_table.py` — migración (probada upgrade/downgrade en PostgreSQL 16)
